@@ -58,7 +58,7 @@
 
 <body>
     <div id="video-container">
-        <video data-active="false" id="video" playsinline loop width="100%" height="100%">
+        <video data-active="false" id="video" playsinline width="100%" height="100%">
             <source src="https://player.vimeo.com/progressive_redirect/playback/846984007/rendition/540p/file.mp4?loc=external&signature=c418b1adf1597903b2c43437d6453bf4d6b3e848bedfe30ebbd9e1a699692191">
         </video>
         <button id="play-button">Depoimento de Vendas</button>
@@ -85,6 +85,15 @@
             progressBar.value = progress;
         }
 
+        function onVideoEnded() {
+            video.style.display = 'none';
+            progressBar.style.display = 'none';
+            playButton.style.display = 'block';
+            video.pause();
+            video.currentTime = 0;
+            isPlaying = false;
+        }
+
         playButton.addEventListener('click', () => {
             video.style.display = 'block';
             progressBar.style.display = 'block';
@@ -104,7 +113,10 @@
             const seekTime = (progressBar.value / 100) * video.duration;
             video.currentTime = seekTime;
         });
+
+        video.addEventListener('ended', onVideoEnded);
     </script>
 </body>
 
 </html>
+
